@@ -1,0 +1,37 @@
+$primary-color: #86d1d6;
+$secondary-color: #e0e0e0;
+$bgcolor-dark: #16181a;
+$bgcolor-light: #f5f5f5;
+
+.app {
+    min-height: 100vh;
+    width: 100%;
+}
+
+.main {
+    .header {
+        background-color: $bgcolor-light;
+        padding: 0.5rem 1rem;
+    }
+    .content {
+        padding: 2rem;
+        .container {
+            /* max-width: 1600px; */
+            margin: auto;
+            .title {
+                margin: 0 0 1rem;
+            }
+            .imageUpload {
+              .imagePreview{
+                margin-top: 1rem;
+                position: relative;
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: cover;
+                width: 200px;
+                height: 200px;
+              }
+            }
+        }
+    }
+}
