@@ -1,10 +1,9 @@
-import Link from "next/link";
-import LogoSvg from "./logo";
-import styles from '../styles/Home.module.scss';
+import Link from 'next/link';
+import LogoSvg from './logo';
 
 const Nav = () => {
     return (
-        <div className={styles.nav}>
+        <div className={`px-5 py-2 bg-gray-100`}>
             <Link href="/">
                 <LogoSvg />
             </Link>

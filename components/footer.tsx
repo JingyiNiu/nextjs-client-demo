@@ -1,9 +1,10 @@
-import styles from '../styles/Home.module.scss';
-
 const Footer = () => {
-  return (
-    <footer className={styles.footer}>Copyright &copy; Jingyi Niu</footer>
-  )
-}
+    const currentYear = new Date().getFullYear();
+    return (
+        <footer className={`bg-gray-100 py-8 text-center`}>
+            Copyright &copy; {currentYear} Jingyi Niu
+        </footer>
+    );
+};
 
-export default Footer
+export default Footer;

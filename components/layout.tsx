@@ -1,5 +1,4 @@
 import Nav from './nav';
-import styles from '../styles/Home.module.scss';
 import Footer from './footer';
 
 type LayoutProps = {
@@ -8,9 +7,9 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps): JSX.Element => {
     return (
-        <div className={styles.app}>
+        <div className={`flex flex-col min-h-screen`}>
             <Nav />
-            <main className={styles.main}>{children}</main>
+            <main className={`flex-1 p-4 max-w-screen-2xl w-full mx-auto`}>{children}</main>
             <Footer />
         </div>
     );
