@@ -9,7 +9,7 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
     return (
         <div className={`flex flex-col min-h-screen`}>
             <Nav />
-            <main className={`flex-1 p-4 max-w-screen-2xl w-full mx-auto`}>{children}</main>
+            <main className={`flex-1 p-4 max-w-screen-lg w-full mx-auto`}>{children}</main>
             <Footer />
         </div>
     );

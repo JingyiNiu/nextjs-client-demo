@@ -3,11 +3,10 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { FormEvent, useRef, useState } from 'react';
-import CustomButton from '../components/button';
-import CustomButton2 from '../components/customButton';
-import Layout from '../components/layout';
+import CustomButton from '../../components/button';
+import Layout from '../../components/layout';
 
-import { apiUrl } from '../enviroments';
+import { apiUrl } from '../../enviroments';
 
 const ImageUploadPage = () => {
     const [imageFile, setImageFile] = useState<Blob | null>(null);

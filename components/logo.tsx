@@ -1,3 +1,5 @@
+import styles from "../styles/Home.module.scss"
+
 const LogoSvg = () => {
     return (
         <svg
@@ -6,6 +8,7 @@ const LogoSvg = () => {
             viewBox="0 0 1000 1000"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            className={styles.logoSvg}
         >
             <g clipPath="url(#clip0_1_2)">
                 <circle cx="500" cy="500" r="500" fill="#86D1D6" />
