@@ -2,6 +2,7 @@ import React from 'react';
 import CustomTitle from './custom-title';
 
 const SelfIntro = () => {
+   
     return (
         <article>
             <CustomTitle>Self Introduction</CustomTitle>
