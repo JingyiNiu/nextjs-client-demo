@@ -1,9 +1,12 @@
 import React from 'react';
+import CustomTitle from './custom-title';
 
 const SelfIntro = () => {
     return (
         <article>
-            <h1 className={`my-4 text-xl`}>Hi there👋</h1>
+            <CustomTitle>Self Introduction</CustomTitle>
+            <p>Hi there👋</p>
+            <br />
             <p>My name is Jingyi Niu, a web developer💻 and a learner 📖</p>
             <br />
             <p>

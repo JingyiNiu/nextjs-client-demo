@@ -3,7 +3,8 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { FormEvent, useRef, useState } from 'react';
-import CustomButton from '../../components/button';
+import BackToHome from '../../components/back-to-home';
+import CustomButton from '../../components/custom-button';
 import Layout from '../../components/layout';
 
 import { apiUrl } from '../../enviroments';
@@ -72,6 +73,7 @@ const ImageUploadPage = () => {
         <Layout>
             <PageHead />
             <>
+                <BackToHome />
                 <h1 className={`text-xl font-bold my-4 text-center`}>Image uploading page</h1>
                 <div className={`flex flex-col items-center`}>
                     <CustomButton onClick={handleUploadImage} buttonStyles={1}>

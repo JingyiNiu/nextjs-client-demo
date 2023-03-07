@@ -1,8 +1,9 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Layout from '../components/layout';
-import CustomLink from '../components/link';
+import CustomBlockLink from '../components/custom-block-link';
 import SelfIntro from '../components/self-intro';
+import CustomTitle from '../components/custom-title';
 
 const Home: NextPage = () => {
     return (
@@ -10,15 +11,9 @@ const Home: NextPage = () => {
             <PageHead />
             <>
                 <SelfIntro />
-                <PostList>
-                    <p>Here all some of dummy hard coded posts just for demo😎</p>
-                    <div>
-                        <CustomLink href="/posts/1">Post One</CustomLink>
-                    </div>
-                    <div>
-                        <CustomLink href="/posts/2">Post Two</CustomLink>
-                    </div>
-                </PostList>
+                <RencentPosts />
+                <MyWorks />
+                <ContactMe />
             </>
         </Layout>
     );
@@ -41,6 +36,29 @@ function PageHead() {
     );
 }
 
-function PostList({ children }: { children: React.ReactNode }) {
-    return <div className="flex flex-col my-8">{children}</div>;
+function RencentPosts() {
+    return (
+        <div className="my-8">
+            <CustomTitle>Recent Posts</CustomTitle>
+            <p>Here are some of dummy hard coded posts just for demo😎</p>
+            <CustomBlockLink href="/posts/1">Post One</CustomBlockLink>
+            <CustomBlockLink href="/posts/2">Post Two</CustomBlockLink>
+        </div>
+    );
+}
+
+function MyWorks() {
+    return (
+        <div className="my-8">
+            <CustomTitle>My Works</CustomTitle>
+        </div>
+    );
+}
+
+function ContactMe() {
+    return (
+        <div className="my-8">
+            <CustomTitle>Contact Me</CustomTitle>
+        </div>
+    );
 }
