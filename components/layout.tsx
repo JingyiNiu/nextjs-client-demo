@@ -1,5 +1,6 @@
 import Nav from './nav';
 import Footer from './footer';
+import BackToTop from './back-to-top';
 
 type LayoutProps = {
     children: React.ReactNode;
@@ -11,6 +12,7 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
             <Nav />
             <main className={`flex-1 p-4 max-w-screen-lg w-full mx-auto`}>{children}</main>
             <Footer />
+            <BackToTop />
         </div>
     );
 };

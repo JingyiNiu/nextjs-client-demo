@@ -11,9 +11,13 @@ const Home: NextPage = () => {
             <>
                 <SelfIntro />
                 <PostList>
-                    <p>Here all some of my recent posts</p>
-                    <div><CustomLink href="/posts/1">Post One</CustomLink></div>
-                    <div><CustomLink href="/posts/2">Post Two</CustomLink></div>
+                    <p>Here all some of dummy hard coded posts just for demo😎</p>
+                    <div>
+                        <CustomLink href="/posts/1">Post One</CustomLink>
+                    </div>
+                    <div>
+                        <CustomLink href="/posts/2">Post Two</CustomLink>
+                    </div>
                 </PostList>
             </>
         </Layout>
