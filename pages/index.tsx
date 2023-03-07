@@ -5,8 +5,9 @@ import parse from 'html-react-parser';
 import Layout from '../components/layout';
 import CustomBlockLink from '../components/custom-block-link';
 import CustomTitle from '../components/custom-title';
-import en from '../locales/en/intro.json';
-import zh from '../locales/zh/intro.json';
+import en from '../locales/en/home_en';
+import zh from '../locales/zh/home_zh';
+import articles_en from '../data/articles';
 
 const Home: NextPage = () => {
     const router = useRouter();
@@ -18,7 +19,7 @@ const Home: NextPage = () => {
             <PageHead />
             <>
                 <SelfIntro t={t} />
-                <RencentPosts t={t} />
+                <RencentArticles t={t} />
                 <MyWorks t={t} />
                 <ContactMe t={t} />
             </>
@@ -66,13 +67,29 @@ function SelfIntro({ t }: TransProps) {
     );
 }
 
-function RencentPosts({ t }: TransProps) {
+export interface Article {
+    id: number;
+    title: string;
+    slug: string;
+    content: string;
+    tags: string[];
+}
+
+function RencentArticles({ t }: TransProps) {
+    const recentArticles = articles_en.slice(0, 3) as Array<Article>;
     return (
         <div className="my-8">
             <CustomTitle>{t.recentArticles.title}</CustomTitle>
             {parse(t.recentArticles.content)}
-            <CustomBlockLink href="/posts/1">Post One</CustomBlockLink>
-            <CustomBlockLink href="/posts/2">Post Two</CustomBlockLink>
+            {recentArticles.map((article: Article) => (
+                <CustomBlockLink
+                    key={article.id}
+                    href={`/articles/${article.slug}`}
+                    className="my-2"
+                >
+                    {article.title}
+                </CustomBlockLink>
+            ))}
         </div>
     );
 }

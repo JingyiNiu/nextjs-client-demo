@@ -1,15 +1,21 @@
 import axios from 'axios';
-import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { FormEvent, useRef, useState } from 'react';
 import BackToHome from '../../components/back-to-home';
 import CustomButton from '../../components/custom-button';
 import Layout from '../../components/layout';
+import en from '../../locales/en/upload_image_en';
+import zh from '../../locales/zh/upload_image_zh';
 
 import { apiUrl } from '../../enviroments';
 
 const ImageUploadPage = () => {
+    const router = useRouter();
+    const { locale } = router;
+    const t = locale === 'zh' ? zh : en;
+
     const [imageFile, setImageFile] = useState<Blob | null>(null);
     const [previewImage, setPreviewImage] = useState('');
     const [error, setError] = useState('');
@@ -74,10 +80,10 @@ const ImageUploadPage = () => {
             <PageHead />
             <>
                 <BackToHome />
-                <h1 className={`text-xl font-bold my-4 text-center`}>Image uploading page</h1>
+                <h1 className={`text-xl font-bold my-4 text-center`}>{t.title}</h1>
                 <div className={`flex flex-col items-center`}>
                     <CustomButton onClick={handleUploadImage} buttonStyles={1}>
-                        Select an image
+                        {t.selectImageButton}
                     </CustomButton>
                     <input
                         type="file"
@@ -96,11 +102,11 @@ const ImageUploadPage = () => {
                             />
                         </div>
                     ) : (
-                        <p className={`my-3`}>Select an image to upload</p>
+                        <p className={`my-3`}>{t.text}</p>
                     )}
 
                     <CustomButton onClick={handleSubmit} disabled={loading} className="mb-3">
-                        Upload
+                        {t.uploadImageButton}
                     </CustomButton>
 
                     {error && (
