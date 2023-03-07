@@ -51,6 +51,7 @@ function MyWorks() {
     return (
         <div className="my-8">
             <CustomTitle>My Works</CustomTitle>
+            <p>Stay tuned...🚧</p>
         </div>
     );
 }
@@ -59,6 +60,7 @@ function ContactMe() {
     return (
         <div className="my-8">
             <CustomTitle>Contact Me</CustomTitle>
+            <p>Stay tuned...🏗️</p>
         </div>
     );
 }
