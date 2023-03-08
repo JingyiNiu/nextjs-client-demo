@@ -10,11 +10,17 @@ const home = {
     },
     myProjects: {
         title: '我的项目',
-        content: '<p>敬请期待...🚧</p>',
+        content: '敬请期待...🚧',
     },
     contactMe: {
         title: '联系我',
-        content: '<p>正在施工中...🏗️</p>',
+        content: '正在施工中...🏗️',
+        form:{
+            name:"姓名",
+            email:"电子邮箱",
+            message:"留言",
+            button:"提交"
+        }
     },
 };
 

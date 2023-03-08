@@ -57,7 +57,7 @@ const ImageUploadPage = () => {
         fileInputRef.current?.click();
     };
 
-    const handleSubmit = (event: FormEvent) => {
+    const handleSubmit = async(event: FormEvent) => {
         event.preventDefault();
         setLoading(true);
 
@@ -82,7 +82,7 @@ const ImageUploadPage = () => {
                 <BackToHome />
                 <h1 className={`text-xl font-bold my-4 text-center`}>{t.title}</h1>
                 <div className={`flex flex-col items-center`}>
-                    <CustomButton onClick={handleUploadImage} buttonStyles={1}>
+                    <CustomButton onClick={handleUploadImage} buttonStyles={1} className="max-w-xs">
                         {t.selectImageButton}
                     </CustomButton>
                     <input
@@ -91,7 +91,6 @@ const ImageUploadPage = () => {
                         onChange={handleFileChange}
                         style={{ display: 'none' }}
                     />
-
                     {previewImage ? (
                         <div className={`relative w-60 h-60 my-5`}>
                             <Image
@@ -104,8 +103,7 @@ const ImageUploadPage = () => {
                     ) : (
                         <p className={`my-3`}>{t.text}</p>
                     )}
-
-                    <CustomButton onClick={handleSubmit} disabled={loading} className="mb-3">
+                    <CustomButton onClick={handleSubmit} disabled={loading} className="mb-3 max-w-xs" >
                         {t.uploadImageButton}
                     </CustomButton>
 

@@ -6,7 +6,7 @@ import CustomBlockLink from '../../components/custom-block-link';
 import CustomTitle from '../../components/custom-title';
 import Layout from '../../components/layout';
 import articles_en from '../../data/articles';
-import { Article } from '../index';
+import { Article } from '../../interfaces/Article';
 import en from '../../locales/en/all_articles_en';
 import zh from '../../locales/zh/all_articles_zh';
 

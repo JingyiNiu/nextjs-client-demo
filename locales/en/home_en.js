@@ -10,11 +10,17 @@ const home = {
     },
     myProjects: {
         title: 'My Projects',
-        content: '<p>Stay tuned...🚧</p>',
+        content: 'Stay tuned...🚧',
     },
     contactMe: {
         title: 'Contact Me',
-        content: '<p>Working on it...🏗️</p>',
+        content: 'Working on it...🏗️',
+        form:{
+            name:"Name",
+            email:"Email",
+            message:"Message",
+            button:"Submit"
+        }
     },
 };
 

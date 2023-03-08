@@ -8,6 +8,11 @@ import CustomTitle from '../components/custom-title';
 import en from '../locales/en/home_en';
 import zh from '../locales/zh/home_zh';
 import articles_en from '../data/articles';
+import { Article } from '../interfaces/Article';
+import { TransProps } from '../interfaces/HomeText';
+import CustomInput from '../components/custom-input';
+import CustomTextarea from '../components/custom-textarea';
+import CustomButton from '../components/custom-button';
 
 const Home: NextPage = () => {
     const router = useRouter();
@@ -44,20 +49,6 @@ function PageHead() {
     );
 }
 
-interface Content {
-    title: string | null;
-    content: string;
-}
-
-interface TransProps {
-    t: {
-        selfIntro: Content;
-        recentArticles: Content;
-        myProjects: Content;
-        contactMe: Content;
-    };
-}
-
 function SelfIntro({ t }: TransProps) {
     return (
         <article>
@@ -67,20 +58,12 @@ function SelfIntro({ t }: TransProps) {
     );
 }
 
-export interface Article {
-    id: number;
-    title: string;
-    slug: string;
-    content: string;
-    tags: string[];
-}
-
 function RencentArticles({ t }: TransProps) {
     const recentArticles = articles_en.slice(0, 3) as Array<Article>;
     return (
         <div className="my-8">
             <CustomTitle>{t.recentArticles.title}</CustomTitle>
-            {parse(t.recentArticles.content)}
+            <p>{t.recentArticles.content} </p>
             {recentArticles.map((article: Article) => (
                 <CustomBlockLink
                     key={article.id}
@@ -98,16 +81,27 @@ function MyWorks({ t }: TransProps) {
     return (
         <div className="my-8">
             <CustomTitle>{t.myProjects.title}</CustomTitle>
-            {parse(t.myProjects.content)}
+            <p>{t.myProjects.content}</p>
         </div>
     );
 }
 
 function ContactMe({ t }: TransProps) {
+    const handleFormSubmit = () => {
+        console.log('submit');
+    };
     return (
         <div className="my-8">
             <CustomTitle>{t.contactMe.title}</CustomTitle>
-            {parse(t.contactMe.content)}
+            <p>{t.contactMe.content}</p>
+            <form>
+                <CustomInput type="text" label={t.contactMe.form.name} />
+                <CustomInput type="text" label={t.contactMe.form.email} />
+                <CustomTextarea rows={4} label={t.contactMe.form.message} />
+                <CustomButton onClick={handleFormSubmit} className="max-w-lg">
+                    {t.contactMe.form.button}
+                </CustomButton>
+            </form>
         </div>
     );
 }

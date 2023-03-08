@@ -17,7 +17,7 @@ const CustomButton = ({
     ...otherProps
 }: CustomButtonProps) => {
     const baseButtonStyles =
-        'p-4 block w-full rounded-md border-2 md:w-72 disabled:opacity-40';
+        'p-4 block w-full rounded-md border-2 disabled:opacity-40';
     const primaryButtonStyles = 'border-primary text-primary hover:text-white hover:bg-primary';
     const secondaryButtonStyles =
         'border-secondary text-secondary hover:text-white hover:bg-secondary';
