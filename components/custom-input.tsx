@@ -16,7 +16,7 @@ const CustomInput = ({ label, ...otherProps }: InputProps) => {
             <label className={labelClassName}>{label}</label>
             <input
                 {...otherProps}
-                className="px-3 py-2 border-2 my-4 w-full max-w-lg border-neutral-800 rounded-md"
+                className="px-3 py-2 border-2 my-4 w-full border-neutral-800 rounded-md"
                 onFocus={() => setIsFocused(true)}
             />
         </div>

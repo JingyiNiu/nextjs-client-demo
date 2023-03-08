@@ -19,7 +19,8 @@ const home = {
             name:"Name",
             email:"Email",
             message:"Message",
-            button:"Submit"
+            button:"Send",
+            successMessage:"✔️ Succeed"
         }
     },
 };

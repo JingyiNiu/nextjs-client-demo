@@ -1,23 +1,18 @@
-import { FormEvent } from 'react';
+import { ButtonHTMLAttributes, FormEvent } from 'react';
 
-type CustomButtonProps = {
-    onClick: (event: FormEvent) => void;
+interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode;
-    disabled?: boolean;
     buttonStyles?: number;
     className?: string;
-};
+}
 
 const CustomButton = ({
-    onClick,
     children,
-    disabled,
     buttonStyles,
     className,
     ...otherProps
 }: CustomButtonProps) => {
-    const baseButtonStyles =
-        'p-4 block w-full rounded-md border-2 disabled:opacity-40';
+    const baseButtonStyles = 'p-4 block w-full rounded-md border-2 disabled:opacity-40';
     const primaryButtonStyles = 'border-primary text-primary hover:text-white hover:bg-primary';
     const secondaryButtonStyles =
         'border-secondary text-secondary hover:text-white hover:bg-secondary';
@@ -27,11 +22,9 @@ const CustomButton = ({
     return (
         <>
             <button
-                onClick={onClick}
                 className={`${baseButtonStyles} ${className} ${
                     buttonStyles ? customButtonStyles : primaryButtonStyles
                 }`}
-                disabled={disabled}
                 {...otherProps}
             >
                 {children}

@@ -11,7 +11,13 @@ export interface TransProps {
         contactMe: {
             title: string;
             content: string;
-            form: { name: string; email: string; message: string; button: string };
+            form: {
+                name: string;
+                email: string;
+                message: string;
+                button: string;
+                successMessage: string;
+            };
         };
     };
 }

@@ -10,14 +10,19 @@ const useQuery = ({ url }: QueryType) => {
         data: null,
         isLoading: true,
         error: '',
+        success: false,
     });
 
     useEffect(() => {
         const fetch = async () => {
             axiosClient
                 .get(url)
-                .then(({ data }) => setState({ data, isLoading: false, error: '' }))
-                .catch((error) => setState({ data: null, isLoading: false, error: error.message }));
+                .then(({ data }: any) =>
+                    setState({ data, isLoading: false, error: '', success: true })
+                )
+                .catch((error: Error) =>
+                    setState({ data: null, isLoading: false, error: error.message, success: false })
+                );
         };
 
         fetch();

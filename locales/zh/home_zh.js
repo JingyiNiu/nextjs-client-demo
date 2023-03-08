@@ -19,7 +19,8 @@ const home = {
             name:"姓名",
             email:"电子邮箱",
             message:"留言",
-            button:"提交"
+            button:"提交",
+            successMessage:"✔️ 提交成功"
         }
     },
 };

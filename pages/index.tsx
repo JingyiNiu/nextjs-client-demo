@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -13,6 +14,7 @@ import { TransProps } from '../interfaces/HomeText';
 import CustomInput from '../components/custom-input';
 import CustomTextarea from '../components/custom-textarea';
 import CustomButton from '../components/custom-button';
+import useMutation from '../hooks/useMutation';
 
 const Home: NextPage = () => {
     const router = useRouter();
@@ -86,21 +88,97 @@ function MyWorks({ t }: TransProps) {
     );
 }
 
+interface ContactFormData {
+    name: string;
+    email: string;
+    message: string;
+}
+
 function ContactMe({ t }: TransProps) {
-    const handleFormSubmit = () => {
-        console.log('submit');
+    const API_END_POINT = '/api/contact';
+    const initialFormData = {
+        name: '',
+        email: '',
+        message: '',
+    };
+    const [formData, setFormData] = useState<ContactFormData>(initialFormData);
+    const [formFilled, setFormFilled] = useState(false);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+    const {
+        mutate: submitContactForm,
+        isLoading,
+        error: contactError,
+        success: isSuccess,
+    } = useMutation({ url: API_END_POINT });
+
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+    ) => {
+        const { name, value } = e.target;
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const isFormValid = Object.values(formData).every((value) => value !== '');
+        isFormValid && setFormFilled(true);
+        await submitContactForm(formData);
+        isSuccess && successMessage();
+        isSuccess && setFormData(initialFormData);
+    };
+
+    const successMessage = () => {
+        setShowSuccessMessage(true);
+        setTimeout(() => {
+            setShowSuccessMessage(false);
+        }, 2000);
     };
     return (
         <div className="my-8">
             <CustomTitle>{t.contactMe.title}</CustomTitle>
             <p>{t.contactMe.content}</p>
-            <form>
-                <CustomInput type="text" label={t.contactMe.form.name} />
-                <CustomInput type="text" label={t.contactMe.form.email} />
-                <CustomTextarea rows={4} label={t.contactMe.form.message} />
-                <CustomButton onClick={handleFormSubmit} className="max-w-lg">
+            <form onSubmit={handleFormSubmit} className="max-w-lg relative">
+                <CustomInput
+                    type="text"
+                    label={t.contactMe.form.name}
+                    name="name"
+                    onChange={handleInputChange}
+                    value={formData.name}
+                    required
+                />
+                <CustomInput
+                    type="text"
+                    label={t.contactMe.form.email}
+                    name="email"
+                    onChange={handleInputChange}
+                    value={formData.email}
+                    required
+                />
+                <CustomTextarea
+                    rows={4}
+                    label={t.contactMe.form.message}
+                    name="message"
+                    onChange={handleInputChange}
+                    value={formData.message}
+                    required
+                />
+                <CustomButton type="submit" disabled={isLoading}>
                     {t.contactMe.form.button}
                 </CustomButton>
+                {contactError && (
+                    <div className={`my-4 text-rose-500 rounded-md p-4 w-full max-w-lg bg-rose-50`}>
+                        <p>{contactError}</p>
+                    </div>
+                )}
+                {isSuccess && (
+                    <div className="absolute-center bg-green-100 text-green-500 rounded-lg font-bold p-4 max-w-lg">
+                        {t.contactMe.form.successMessage}
+                    </div>
+                )}
             </form>
         </div>
     );

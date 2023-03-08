@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -8,8 +7,7 @@ import CustomButton from '../../components/custom-button';
 import Layout from '../../components/layout';
 import en from '../../locales/en/upload_image_en';
 import zh from '../../locales/zh/upload_image_zh';
-
-import { apiUrl } from '../../enviroments';
+import useMutation from '../../hooks/useMutation';
 
 const ImageUploadPage = () => {
     const router = useRouter();
@@ -18,15 +16,21 @@ const ImageUploadPage = () => {
 
     const [imageFile, setImageFile] = useState<Blob | null>(null);
     const [previewImage, setPreviewImage] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [fileError, setFileError] = useState('');
+
+    const API_END_POINT = '/api/imageupload';
+    const {
+        mutate: uploadImage,
+        isLoading,
+        error: uoloadError,
+    } = useMutation({ url: API_END_POINT });
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setError('');
         setImageFile(null);
         setPreviewImage('');
+        setFileError('');
 
         const validFileTypes = ['image/jpg', 'image/jpeg', 'image/png'];
 
@@ -41,7 +45,7 @@ const ImageUploadPage = () => {
         }
 
         if (!validFileTypes.find((type) => type === file.type)) {
-            setError('File must be in JPG/PNG format');
+            setFileError('File must be in JPG/PNG format');
             return;
         }
 
@@ -57,22 +61,13 @@ const ImageUploadPage = () => {
         fileInputRef.current?.click();
     };
 
-    const handleSubmit = async(event: FormEvent) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        setLoading(true);
 
         const formData = new FormData();
         imageFile && formData.append('image', imageFile);
 
-        axios
-            .post(`${apiUrl}/api/imageupload`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            })
-            .then(() => setLoading(false))
-            .catch((error) => {
-                setError(error.message);
-                setLoading(false);
-            });
+        await uploadImage(formData);
     };
 
     return (
@@ -103,15 +98,19 @@ const ImageUploadPage = () => {
                     ) : (
                         <p className={`my-3`}>{t.text}</p>
                     )}
-                    <CustomButton onClick={handleSubmit} disabled={loading} className="mb-3 max-w-xs" >
+                    <CustomButton
+                        onClick={handleSubmit}
+                        disabled={isLoading}
+                        className="mb-3 max-w-xs"
+                    >
                         {t.uploadImageButton}
                     </CustomButton>
 
-                    {error && (
-                        <>
-                            <p className={`text-rose-400`}>{error}</p>
-                            <p className={`text-rose-400`}>Please try again later</p>
-                        </>
+                    {(fileError || uoloadError) && (
+                        <div className={`text-rose-500 rounded-md p-4 w-full max-w-xs bg-rose-50`}>
+                            <p>{fileError}</p>
+                            <p>{uoloadError}</p>
+                        </div>
                     )}
                 </div>
             </>
