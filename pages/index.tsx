@@ -102,7 +102,6 @@ function ContactMe({ t }: TransProps) {
         message: '',
     };
     const [formData, setFormData] = useState<ContactFormData>(initialFormData);
-    const [formFilled, setFormFilled] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     const {
@@ -124,8 +123,6 @@ function ContactMe({ t }: TransProps) {
 
     const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const isFormValid = Object.values(formData).every((value) => value !== '');
-        isFormValid && setFormFilled(true);
         await submitContactForm(formData);
         isSuccess && successMessage();
         isSuccess && setFormData(initialFormData);
@@ -174,7 +171,7 @@ function ContactMe({ t }: TransProps) {
                         <p>{contactError}</p>
                     </div>
                 )}
-                {isSuccess && (
+                {showSuccessMessage && (
                     <div className="absolute-center bg-green-100 text-green-500 rounded-lg font-bold p-4 max-w-lg">
                         {t.contactMe.form.successMessage}
                     </div>

@@ -14,7 +14,7 @@ const home = {
     },
     contactMe: {
         title: 'Contact Me',
-        content: 'Working on it...🏗️',
+        content: 'Send a message and I will get back to you ASAP📧',
         form:{
             name:"Name",
             email:"Email",
