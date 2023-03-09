@@ -22,8 +22,11 @@ const useMutation = ({ url, method = 'POST' }: MutationType) => {
             .then(() => {
                 setState({ isLoading: false, error: '', success: true });
             })
-            .catch((error: Error) => {
-                setState({ isLoading: false, error: error.message, success: false });
+            .catch((error: Error | any) => {
+                const errorMessage = error.response.data.message
+                    ? error.response.data.message
+                    : error.message;
+                setState({ isLoading: false, error: errorMessage, success: false });
             });
     };
 
