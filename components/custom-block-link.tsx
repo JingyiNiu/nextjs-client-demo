@@ -12,7 +12,7 @@ const CustomBlockLink = ({ href, className, children }: LinkProps) => {
         <div className={`${className}`}>
             <Link
                 href={href}
-                className={`text-primary800 underline underline-offset-4 decoration-dotted hover:decoration-solid hover:font-medium hover:decoration-2`}
+                className={`text-primary800 underline underline-offset-4 decoration-dotted hover:decoration-solid hover:decoration-2`}
             >
                 {children}
             </Link>

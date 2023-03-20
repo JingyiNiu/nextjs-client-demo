@@ -1,0 +1,9 @@
+@import './variables.scss';
+
+.logoSvg {
+    &:hover {
+        circle {
+            fill: $primary-800;
+        }
+    }
+}
