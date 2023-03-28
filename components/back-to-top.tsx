@@ -22,7 +22,7 @@ const BackToTop = () => {
         <>
             {showButton && (
                 <button
-                    className={`hidden bottom-4 right-4 bg-primary px-3 py-4 text-white font-medium hover:bg-primary800 md:block md:fixed`}
+                    className={`hidden bottom-4 right-4 bg-primary-500 px-3 py-4 text-white font-medium hover:bg-primary-800 md:block md:fixed`}
                     onClick={handleClick}
                 >
                     <div className="w-0 h-0 border-b-8 border-b-white border-l-8 border-l-transparent border-r-8 border-r-transparent"></div>

@@ -1,9 +1,8 @@
 import axios from "axios"
-
-const baseURL = process.env.NEXT_PUBLIC_API_URL;
+import API_BASE_URL from "./utils/utils"
 
 const axiosClient = axios.create({
-  baseURL,
+  API_BASE_URL,
   headers: {
     'x-text-header': 'test',
   },

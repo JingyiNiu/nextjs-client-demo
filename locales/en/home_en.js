@@ -6,7 +6,7 @@ const home = {
     },
     recentArticles: {
         title: 'Recent Articles',
-        content: 'Here are some of dummy hard coded articles just for demo👻',
+        content: 'Here are some of recent articles👻',
     },
     myProjects: {
         title: 'My Projects',

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import parse from 'html-react-parser';
@@ -8,15 +7,15 @@ import CustomBlockLink from '../components/custom-block-link';
 import CustomTitle from '../components/custom-title';
 import en from '../locales/en/home_en';
 import zh from '../locales/zh/home_zh';
-import articles_en from '../data/articles';
 import { Article } from '../interfaces/Article';
 import { TransProps } from '../interfaces/HomeText';
 import CustomInput from '../components/custom-input';
 import CustomTextarea from '../components/custom-textarea';
 import CustomButton from '../components/custom-button';
 import useMutation from '../hooks/useMutation';
+import { API_BASE_URL } from '../utils/utils';
 
-const Home: NextPage = () => {
+const Home = ({ data }: { data: Array<Article> }) => {
     const router = useRouter();
     const { locale } = router;
     const t = locale === 'zh' ? zh : en;
@@ -26,7 +25,7 @@ const Home: NextPage = () => {
             <PageHead />
             <>
                 <SelfIntro t={t} />
-                <RencentArticles t={t} />
+                <RencentArticles t={t} articles={data} />
                 <MyWorks t={t} />
                 <ContactMe t={t} />
             </>
@@ -41,10 +40,7 @@ function PageHead() {
         <Head>
             <title>N.JY</title>
             <meta name="description" content="A personal website created, maintain by Jingyi Niu" />
-            <meta
-                name="keywords"
-                content="Jingyi Niu, niujingyi, Personal website, Nextjs, Web App, Portfolio"
-            />
+            <meta name="keywords" content="Jingyi Niu, niujingyi, Personal website, Nextjs, Web App, Portfolio" />
             <meta name="author" content="Jingyi Niu" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
@@ -60,18 +56,14 @@ function SelfIntro({ t }: TransProps) {
     );
 }
 
-function RencentArticles({ t }: TransProps) {
-    const recentArticles = articles_en.slice(0, 3) as Array<Article>;
+function RencentArticles({ t, articles }: any) {
+    const recentArticles = articles.slice(0, 3) as Array<Article>;
     return (
         <div className="my-8">
             <CustomTitle>{t.recentArticles.title}</CustomTitle>
             <p>{t.recentArticles.content} </p>
             {recentArticles.map((article: Article) => (
-                <CustomBlockLink
-                    key={article.id}
-                    href={`/articles/${article.slug}`}
-                    className="my-2"
-                >
+                <CustomBlockLink key={article.id} href={`/articles/${article.slug}`} className="my-2">
                     {article.title}
                 </CustomBlockLink>
             ))}
@@ -111,9 +103,7 @@ function ContactMe({ t }: TransProps) {
         success: isSuccess,
     } = useMutation({ url: API_END_POINT });
 
-    const handleInputChange = (
-        e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
-    ) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prevState) => ({
             ...prevState,
@@ -179,4 +169,15 @@ function ContactMe({ t }: TransProps) {
             </form>
         </div>
     );
+}
+
+export async function getServerSideProps() {
+    const res = await fetch(`${API_BASE_URL}/api/article`);
+    const { data } = await res.json();
+
+    return {
+        props: {
+            data,
+        },
+    };
 }

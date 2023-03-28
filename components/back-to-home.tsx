@@ -11,7 +11,7 @@ const BackToHome = () => {
         <div className="p-4">
             <Link href="/">
                 🏠{' '}
-                <span className="text-lg text-primary800 underline underline-offset-4 decoration-dotted hover:decoration-solid hover:font-medium hover:decoration-2">
+                <span className="text-lg text-primary-800 underline underline-offset-4 decoration-dotted hover:decoration-solid hover:font-medium hover:decoration-2">
                     {text}
                 </span>
             </Link>

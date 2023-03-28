@@ -6,7 +6,7 @@ const home = {
     },
     recentArticles: {
         title: '最近发布的文章',
-        content: '下面是些演示用的假的文章列表👻',
+        content: '文章列表👻',
     },
     myProjects: {
         title: '我的项目',
