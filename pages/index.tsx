@@ -57,16 +57,16 @@ function SelfIntro({ t }: TransProps) {
 }
 
 function RencentArticles({ t, articles }: any) {
-    const recentArticles = articles.slice(0, 3) as Array<Article>;
+    const recentArticles = articles && articles.slice(0, 3) as Array<Article>;
     return (
         <div className="my-8">
             <CustomTitle>{t.recentArticles.title}</CustomTitle>
             <p>{t.recentArticles.content} </p>
-            {recentArticles.map((article: Article) => (
+            {recentArticles ? recentArticles.map((article: Article) => (
                 <CustomBlockLink key={article.id} href={`/articles/${article.slug}`} className="my-2">
                     {article.title}
                 </CustomBlockLink>
-            ))}
+            )) : <>Oops...No data found</>}
         </div>
     );
 }
@@ -172,12 +172,18 @@ function ContactMe({ t }: TransProps) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch(`${API_BASE_URL}/api/article`);
-    const { data } = await res.json();
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/article`);
+        const { data } = await res.json();
 
-    return {
-        props: {
-            data,
-        },
-    };
+        return {
+            props: {
+                data,
+            },
+        };
+    } catch (error) {
+        return {
+            props: { error: true },
+        };
+    }
 }
