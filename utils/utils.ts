@@ -18,3 +18,5 @@ export const capitalizeText = (text: string) => {
     const result = text.charAt(0).toUpperCase() + text.slice(1);
     return result;
 };
+
+export const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID || "";

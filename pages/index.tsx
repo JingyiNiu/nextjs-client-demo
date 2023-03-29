@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import parse from 'html-react-parser';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
 import Layout from '../components/layout';
 import CustomBlockLink from '../components/custom-block-link';
 import CustomTitle from '../components/custom-title';
@@ -13,7 +15,7 @@ import CustomInput from '../components/custom-input';
 import CustomTextarea from '../components/custom-textarea';
 import CustomButton from '../components/custom-button';
 import useMutation from '../hooks/useMutation';
-import { API_BASE_URL } from '../utils/utils';
+import { API_BASE_URL, GOOGLE_CLIENT_ID } from '../utils/utils';
 
 const Home = ({ data }: { data: Array<Article> }) => {
     const router = useRouter();
@@ -21,15 +23,17 @@ const Home = ({ data }: { data: Array<Article> }) => {
     const t = locale === 'zh' ? zh : en;
 
     return (
-        <Layout>
-            <PageHead />
-            <>
-                <SelfIntro t={t} />
-                <RencentArticles t={t} articles={data} />
-                <MyWorks t={t} />
-                <ContactMe t={t} />
-            </>
-        </Layout>
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+            <Layout>
+                <PageHead />
+                <>
+                    <SelfIntro t={t} />
+                    <RencentArticles t={t} articles={data} />
+                    <MyWorks t={t} />
+                    <ContactMe t={t} />
+                </>
+            </Layout>
+        </GoogleOAuthProvider>
     );
 };
 
