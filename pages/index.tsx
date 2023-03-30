@@ -15,17 +15,21 @@ import CustomButton from '../components/custom-button';
 import useMutation from '../hooks/useMutation';
 import { API_BASE_URL } from '../utils/utils';
 
-const Home = ({ data }: { data: Array<Article> }) => {
+const Home = ({ home_intro, recent_articles }: any) => {
     const router = useRouter();
     const { locale } = router;
     const t = locale === 'zh' ? zh : en;
+    let locale_home_intro;
+    if (home_intro && home_intro.length) {
+        locale_home_intro = locale === 'zh' ? home_intro[1] : home_intro[0];
+    }
 
     return (
         <Layout>
             <PageHead />
             <>
-                <SelfIntro t={t} />
-                <RencentArticles t={t} articles={data} />
+                <SelfIntro locale_home_intro={locale_home_intro} />
+                <RencentArticles t={t} recent_articles={recent_articles} />
                 <MyWorks t={t} />
                 <ContactMe t={t} />
             </>
@@ -40,33 +44,39 @@ function PageHead() {
         <Head>
             <title>N.JY</title>
             <meta name="description" content="A personal website created, maintain by Jingyi Niu" />
-            <meta name="keywords" content="Jingyi Niu, niujingyi, Personal website, Nextjs, Web App, Portfolio" />
+            <meta
+                name="keywords"
+                content="Niu Jingyi, Jingyi Niu, niujingyi, Personal website, Nextjs, Web App, Portfolio"
+            />
             <meta name="author" content="Jingyi Niu" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
     );
 }
 
-function SelfIntro({ t }: TransProps) {
+function SelfIntro({ locale_home_intro }: any) {
     return (
         <article>
-            <CustomTitle>{t.selfIntro.title}</CustomTitle>
-            {parse(t.selfIntro.content)}
+            <CustomTitle>{locale_home_intro && locale_home_intro.title}</CustomTitle>
+            {parse(locale_home_intro ? locale_home_intro.content : '')}
         </article>
     );
 }
 
-function RencentArticles({ t, articles }: any) {
-    const recentArticles = articles && articles.slice(0, 3) as Array<Article>;
+function RencentArticles({ t, recent_articles }: any) {
     return (
         <div className="my-8">
             <CustomTitle>{t.recentArticles.title}</CustomTitle>
             <p>{t.recentArticles.content} </p>
-            {recentArticles ? recentArticles.map((article: Article) => (
-                <CustomBlockLink key={article.id} href={`/articles/${article.slug}`} className="my-2">
-                    {article.title}
-                </CustomBlockLink>
-            )) : <>Oops...No data found</>}
+            {recent_articles ? (
+                recent_articles.map((article: Article) => (
+                    <CustomBlockLink key={article.id} href={`/articles/${article.slug}`} className="my-2">
+                        {article.title}
+                    </CustomBlockLink>
+                ))
+            ) : (
+                <>Oops...No data found</>
+            )}
         </div>
     );
 }
@@ -173,12 +183,13 @@ function ContactMe({ t }: TransProps) {
 
 export async function getServerSideProps() {
     try {
-        const res = await fetch(`${API_BASE_URL}/api/article`);
-        const { data } = await res.json();
+        const res = await fetch(`${API_BASE_URL}/api/home`);
+        const { home_intro, recent_articles } = await res.json();
 
         return {
             props: {
-                data,
+                home_intro,
+                recent_articles,
             },
         };
     } catch (error) {
