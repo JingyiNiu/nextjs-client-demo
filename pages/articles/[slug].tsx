@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import parse from 'html-react-parser';
 import CustomBlockLink from '../../components/custom-block-link';
 import CustomTitle from '../../components/custom-title';
@@ -10,10 +10,16 @@ import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import NotFound from '../404';
 import { API_BASE_URL, formatDate } from '../../utils/utils';
+import Prism from 'prismjs';
+import 'prismjs/themes/prism-okaidia.min.css';
 
 const ArticlePage = ({ data }: { data: Array<Article> }) => {
     const article = data[0];
 
+    useEffect(() => {
+        Prism.highlightAll();
+      }, []);
+      
     return (
         <Layout>
             {data.length ? (

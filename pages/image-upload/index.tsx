@@ -18,12 +18,8 @@ const ImageUploadPage = () => {
     const [previewImage, setPreviewImage] = useState('');
     const [fileError, setFileError] = useState('');
 
-    const API_END_POINT = '/api/imageupload';
-    const {
-        mutate: uploadImage,
-        isLoading,
-        error: uoloadError,
-    } = useMutation({ url: API_END_POINT });
+    const API_END_POINT = '/api/image';
+    const { mutate: uploadImage, isLoading, error: uoloadError } = useMutation({ url: API_END_POINT });
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -67,7 +63,7 @@ const ImageUploadPage = () => {
         const formData = new FormData();
         imageFile && formData.append('image', imageFile);
 
-        await uploadImage(formData);
+        setFileError('This function has been deprecated');
     };
 
     return (
@@ -80,29 +76,15 @@ const ImageUploadPage = () => {
                     <CustomButton onClick={handleUploadImage} buttonStyles={1} className="max-w-xs">
                         {t.selectImageButton}
                     </CustomButton>
-                    <input
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handleFileChange}
-                        style={{ display: 'none' }}
-                    />
+                    <input type="file" ref={fileInputRef} onChange={handleFileChange} style={{ display: 'none' }} />
                     {previewImage ? (
                         <div className={`relative w-60 h-60 my-5`}>
-                            <Image
-                                src={previewImage}
-                                fill={true}
-                                alt="Preview"
-                                className={`object-cover`}
-                            />
+                            <Image src={previewImage} fill={true} alt="Preview" className={`object-cover`} />
                         </div>
                     ) : (
                         <p className={`my-3`}>{t.text}</p>
                     )}
-                    <CustomButton
-                        onClick={handleSubmit}
-                        disabled={isLoading}
-                        className="mb-3 max-w-xs"
-                    >
+                    <CustomButton onClick={handleSubmit} disabled={isLoading} className="mb-3 max-w-xs">
                         {t.uploadImageButton}
                     </CustomButton>
 
@@ -123,10 +105,7 @@ function PageHead() {
         <Head>
             <title>Image uplaod - N.JY</title>
             <meta name="description" content="A personal website created, maintain by Jingyi Niu" />
-            <meta
-                name="keywords"
-                content="Jingyi Niu, niujingyi, Personal website, Nextjs, Web App, Portfolio"
-            />
+            <meta name="keywords" content="Jingyi Niu, niujingyi, Personal website, Nextjs, Web App, Portfolio" />
             <meta name="author" content="Jingyi Niu" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
