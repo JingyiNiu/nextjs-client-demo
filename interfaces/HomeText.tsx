@@ -1,7 +1,7 @@
 interface Content {
     title: string;
     content: string;
-    button: string;
+    button?: string;
 }
 
 export interface TransProps {
