@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
-import CustomButton from '../../components/custom-button';
+import CustomButton from '../../components/custom/custom-button';
 
 const NotFound = () => {
     return (

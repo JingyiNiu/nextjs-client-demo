@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { FormEvent, useRef, useState } from 'react';
 import BackToHome from '../../components/back-to-home';
-import CustomButton from '../../components/custom-button';
+import CustomButton from '../../components/custom/custom-button';
 import Layout from '../../components/layout';
 import en from '../../locales/en/upload_image_en';
 import zh from '../../locales/zh/upload_image_zh';
@@ -73,10 +73,12 @@ const ImageUploadPage = () => {
                 <BackToHome />
                 <h1 className={`text-xl font-bold my-4 text-center`}>{t.title}</h1>
                 <div className={`flex flex-col items-center`}>
-                    <CustomButton onClick={handleUploadImage} buttonStyles={1} className="max-w-xs">
+                    <CustomButton onClick={handleUploadImage} buttonStyles={1} className="my-4 w-48">
                         {t.selectImageButton}
                     </CustomButton>
+
                     <input type="file" ref={fileInputRef} onChange={handleFileChange} style={{ display: 'none' }} />
+
                     {previewImage ? (
                         <div className={`relative w-60 h-60 my-5`}>
                             <Image src={previewImage} fill={true} alt="Preview" className={`object-cover`} />
@@ -84,7 +86,8 @@ const ImageUploadPage = () => {
                     ) : (
                         <p className={`my-3`}>{t.text}</p>
                     )}
-                    <CustomButton onClick={handleSubmit} disabled={isLoading} className="mb-3 max-w-xs">
+
+                    <CustomButton onClick={handleSubmit} disabled={isLoading} className="my-4 w-48">
                         {t.uploadImageButton}
                     </CustomButton>
 
