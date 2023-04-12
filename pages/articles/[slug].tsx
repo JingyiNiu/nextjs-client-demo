@@ -8,7 +8,6 @@ import Layout from '../../components/layout';
 import { Article } from '../../interfaces/Article';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import NotFound from '../404';
 import { API_BASE_URL, formatDate } from '../../utils/utils';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism-okaidia.min.css';
@@ -29,7 +28,7 @@ const ArticlePage = ({ data }: { data: Article }) => {
                     </>
                 </>
             ) : (
-                <NotFound />
+                <div className="my-2 text-primary-800">Oops...There is something wrong, please try again later</div>
             )}
         </Layout>
     );
@@ -79,11 +78,17 @@ function Article({ article }: { article: Article }) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const { params } = context;
-    const slug = params?.slug;
+    try {
+        const { params } = context;
+        const slug = params?.slug;
 
-    const res = await fetch(`${API_BASE_URL}/api/article/${slug}`);
-    const data = await res.json();
+        const res = await fetch(`${API_BASE_URL}/api/article/${slug}`);
+        const data = await res.json();
 
-    return { props: { data } };
+        return { props: { data } };
+    } catch (error) {
+        return {
+            props: { error: true },
+        };
+    }
 }

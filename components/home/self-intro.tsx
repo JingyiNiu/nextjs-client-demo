@@ -14,7 +14,7 @@ const SelfIntro = ({ locale_home_intro }: any) => {
             ) : (
                 <>
                     <CustomTitle>Introduction</CustomTitle>
-                    <div className="my-2 text-primary-800">There is something wrong, please try again later</div>
+                    <div className="my-2 text-primary-800">Oops...There is something wrong, please try again later</div>
                 </>
             )}
         </>

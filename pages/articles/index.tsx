@@ -23,11 +23,15 @@ const AllArticles = ({ data }: { data: Array<Article> }) => {
                 <ArticlesList>
                     <CustomTitle>{t.title}</CustomTitle>
                     <p>{t.text}</p>
-                    {data && data.length && data.map((article: Article) => (
-                        <CustomBlockLink key={article.id} href={`/articles/${article.slug}`} className="my-2">
-                            {article.title}
-                        </CustomBlockLink>
-                    ))}
+                    {data && data.length ? (
+                        data.map((article: Article) => (
+                            <CustomBlockLink key={article.id} href={`/articles/${article.slug}`} className="my-2">
+                                {article.title}
+                            </CustomBlockLink>
+                        ))
+                    ) : (
+                        <div className="my-2 text-primary-800">Oops...There is something wrong, please try again later</div>
+                    )}
                 </ArticlesList>
             </>
         </Layout>
@@ -53,12 +57,18 @@ function ArticlesList({ children }: { children: React.ReactNode }) {
 }
 
 export async function getServerSideProps() {
-    const res = await fetch(`${API_BASE_URL}/api/article`);
-    const data = await res.json();
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/article`);
+        const data = await res.json();
 
-    return {
-        props: {
-            data,
-        },
-    };
+        return {
+            props: {
+                data,
+            },
+        };
+    } catch (error) {
+        return {
+            props: { error: true },
+        };
+    }
 }

@@ -22,7 +22,7 @@ const RecentArticles = ({ t, recent_articles }: Props) => {
                     </CustomBlockLink>
                 ))
             ) : (
-                <div className="my-2 text-primary-800">Oops...No data found</div>
+                <div className="my-2 text-primary-800">There is something wrong, no article found</div>
             )}
 
             <Link href={`/articles`} className="my-2">
