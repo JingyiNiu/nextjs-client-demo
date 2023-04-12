@@ -15,8 +15,6 @@ const AllArticles = ({ data }: { data: Array<Article> }) => {
     const { locale } = router;
     const t = locale === 'zh' ? zh : en;
 
-    const allArticles = data;
-
     return (
         <Layout>
             <PageHead />
@@ -25,7 +23,7 @@ const AllArticles = ({ data }: { data: Array<Article> }) => {
                 <ArticlesList>
                     <CustomTitle>{t.title}</CustomTitle>
                     <p>{t.text}</p>
-                    {allArticles.map((article: Article) => (
+                    {data && data.length && data.map((article: Article) => (
                         <CustomBlockLink key={article.id} href={`/articles/${article.slug}`} className="my-2">
                             {article.title}
                         </CustomBlockLink>
