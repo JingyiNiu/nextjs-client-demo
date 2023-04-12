@@ -30,7 +30,6 @@ const ContactMe = ({ t }: Props) => {
         mutate: submitContactForm,
         isLoading,
         error: contactError,
-        success: isSuccess,
     } = useMutation({ url: API_END_POINT });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -43,9 +42,10 @@ const ContactMe = ({ t }: Props) => {
 
     const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        await submitContactForm(formData);
-        isSuccess && successMessage();
-        isSuccess && setFormData(initialFormData);
+        submitContactForm(formData).then(() => {
+            successMessage();
+            setFormData(initialFormData);
+        });
     };
 
     const successMessage = () => {

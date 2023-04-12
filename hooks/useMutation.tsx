@@ -19,7 +19,7 @@ const useMutation = ({ url, method = 'POST' }: MutationType) => {
             isLoading: true,
         }));
         axiosClient({ url, method, data })
-            .then(() => {
+            .then((res) => {
                 setState({ isLoading: false, error: '', success: true });
             })
             .catch((error: Error | any) => {

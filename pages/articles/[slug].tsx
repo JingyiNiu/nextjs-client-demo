@@ -13,21 +13,19 @@ import { API_BASE_URL, formatDate } from '../../utils/utils';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism-okaidia.min.css';
 
-const ArticlePage = ({ data }: { data: Array<Article> }) => {
-    const article = data[0];
-
+const ArticlePage = ({ data }: { data: Article }) => {
     useEffect(() => {
         Prism.highlightAll();
-      }, []);
-      
+    }, []);
+
     return (
         <Layout>
-            {data.length ? (
+            {data ? (
                 <>
-                    <PageHead article={article} />
+                    <PageHead article={data} />
                     <>
                         <BackToAllArticles />
-                        <Article article={article} />
+                        <Article article={data} />
                     </>
                 </>
             ) : (
@@ -72,22 +70,10 @@ function Article({ article }: { article: Article }) {
     return (
         <div className={`bg-neutral-100 border-b-4 border-b-primary-500 p-4 md:pt-10 md:pb-16 md:px-20 my-8`}>
             <CustomTitle>{article.title}</CustomTitle>
-            <h4 className='my-4 text-neutral-400 text-sm'>Published at { article.updated_at ? formatDate(article.updated_at) : formatDate(article.created_at)}</h4>
+            <h4 className="my-4 text-neutral-400 text-sm">
+                Published at {article.updated_at ? formatDate(article.updated_at) : formatDate(article.created_at)}
+            </h4>
             <>{parse(article.content)}</>
-        </div>
-    );
-}
-
-function PrevAndNextArticles() {
-    const router = useRouter();
-    const { locale } = router;
-    const prev = locale === 'zh' ? '前一篇文章' : 'Previous Article';
-    const next = locale === 'zh' ? '后一篇文章' : 'Next Article';
-
-    return (
-        <div className="flex justify-between mb-8">
-            <CustomBlockLink href="/articles/1">{prev}</CustomBlockLink>
-            <CustomBlockLink href="/articles/2">{next}</CustomBlockLink>
         </div>
     );
 }
@@ -97,7 +83,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const slug = params?.slug;
 
     const res = await fetch(`${API_BASE_URL}/api/article/${slug}`);
-    const { data } = await res.json();
+    const data = await res.json();
 
     return { props: { data } };
 }

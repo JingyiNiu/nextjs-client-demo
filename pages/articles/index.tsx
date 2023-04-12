@@ -56,7 +56,7 @@ function ArticlesList({ children }: { children: React.ReactNode }) {
 
 export async function getServerSideProps() {
     const res = await fetch(`${API_BASE_URL}/api/article`);
-    const { data } = await res.json();
+    const data = await res.json();
 
     return {
         props: {

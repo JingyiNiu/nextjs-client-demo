@@ -73,7 +73,7 @@ const ImageUploadPage = () => {
                 <BackToHome />
                 <h1 className={`text-xl font-bold my-4 text-center`}>{t.title}</h1>
                 <div className={`flex flex-col items-center`}>
-                    <CustomButton onClick={handleUploadImage} buttonStyles={1} className="my-4 w-48">
+                    <CustomButton onClick={handleUploadImage} buttonStyles={1} className="my-4 w-64">
                         {t.selectImageButton}
                     </CustomButton>
 
@@ -87,7 +87,7 @@ const ImageUploadPage = () => {
                         <p className={`my-3`}>{t.text}</p>
                     )}
 
-                    <CustomButton onClick={handleSubmit} disabled={isLoading} className="my-4 w-48">
+                    <CustomButton onClick={handleSubmit} disabled={isLoading} className="my-4 w-64">
                         {t.uploadImageButton}
                     </CustomButton>
 
