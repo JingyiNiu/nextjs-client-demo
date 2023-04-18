@@ -6,4 +6,6 @@ export interface Article {
     slug: string;
     content: string;
     tags: Tag[];
+    created_at: string;
+    updated_at: string;
 }

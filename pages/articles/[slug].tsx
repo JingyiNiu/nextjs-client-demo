@@ -66,6 +66,7 @@ function BackToAllArticles() {
 }
 
 function Article({ article }: { article: Article }) {
+    console.log(article)
     return (
         <div className={`bg-neutral-100 border-b-4 border-b-primary-500 p-4 md:pt-10 md:pb-16 md:px-20 my-8`}>
             <CustomTitle>{article.title}</CustomTitle>
