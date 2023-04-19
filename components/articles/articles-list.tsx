@@ -5,21 +5,17 @@ import ArticleLink from './article-link';
 
 interface Props {
     articles: Article[];
-    t: {
-        title: string;
-        text: string;
-    };
+    lang: string;
 }
 
-const ArticlesList = ({ articles, t }: Props) => {
+const ArticlesList = ({ articles, lang }: Props) => {
     return (
         <>
-            <CustomTitle>{t.title}</CustomTitle>
-            <p>{t.text}</p>
+            <CustomTitle>{lang ? '文章列表' : 'All Articles'}</CustomTitle>
             {articles && articles.length ? (
                 articles.map((article: Article) => (
                     <ArticleLink key={article.id} href={`/articles/${article.slug}`} tags={article.tags} className="my-2">
-                        {article.title}
+                        {lang ? (article.title_zh ? article.title_zh : article.title) : article.title}
                     </ArticleLink>
                 ))
             ) : (

@@ -8,8 +8,6 @@ import TagsList from '../../components/articles/tags-list';
 import { Article } from '../../interfaces/Article';
 import { Tag } from '../../interfaces/Tag';
 import { API_BASE_URL } from '../../utils/utils';
-import en from '../../locales/en/all_articles_en';
-import zh from '../../locales/zh/all_articles_zh';
 
 interface Props {
     articles: Article[];
@@ -18,15 +16,15 @@ interface Props {
 const AllArticles = ({ articles, tags }: Props) => {
     const router = useRouter();
     const { locale } = router;
-    const t = locale === 'zh' ? zh : en;
+    const lang = locale === 'zh' ? 'zh' : '';
 
     return (
         <Layout>
             <PageHead />
             <BackToHome />
             <div className="m-8">
-                {/* <TagsList tags={tags} /> */}
-                <ArticlesList articles={articles} t={t} />
+                <TagsList tags={tags} />
+                <ArticlesList articles={articles} lang={lang} />
             </div>
         </Layout>
     );

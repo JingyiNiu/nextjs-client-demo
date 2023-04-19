@@ -8,9 +8,10 @@ import { TransProps } from '../../interfaces/HomeText';
 interface Props {
     t: TransProps;
     recent_articles: [];
+    lang: string;
 }
 
-const RecentArticles = ({ t, recent_articles }: Props) => {
+const RecentArticles = ({ t, recent_articles, lang }: Props) => {
     return (
         <div className="my-8">
             <CustomTitle>{t.recentArticles.title}</CustomTitle>
@@ -18,7 +19,7 @@ const RecentArticles = ({ t, recent_articles }: Props) => {
             {recent_articles ? (
                 recent_articles.map((article: Article) => (
                     <CustomBlockLink key={article.id} href={`/articles/${article.slug}`} className="my-2">
-                        {article.title}
+                        {lang ? (article.title_zh ? article.title_zh : article.title) : article.title}
                     </CustomBlockLink>
                 ))
             ) : (
@@ -26,9 +27,7 @@ const RecentArticles = ({ t, recent_articles }: Props) => {
             )}
 
             <Link href={`/articles`} className="my-2">
-                <button className="block rounded px-3 py-1 bg-primary-500 hover:bg-primary-800">
-                    {t.recentArticles.button}
-                </button>
+                <button className="block rounded px-3 py-1 bg-primary-500 hover:bg-primary-800">{t.recentArticles.button}</button>
             </Link>
         </div>
     );

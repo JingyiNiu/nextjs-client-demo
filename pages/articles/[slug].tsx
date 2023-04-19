@@ -2,7 +2,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 import parse from 'html-react-parser';
-import CustomBlockLink from '../../components/custom/custom-block-link';
 import CustomTitle from '../../components/custom/custom-title';
 import Layout from '../../components/layout';
 import { Article } from '../../interfaces/Article';
@@ -13,6 +12,10 @@ import Prism from 'prismjs';
 import 'prismjs/themes/prism-okaidia.min.css';
 
 const ArticlePage = ({ data }: { data: Article }) => {
+    const router = useRouter();
+    const { locale } = router;
+    const lang = locale === 'zh' ? 'zh' : '';
+
     useEffect(() => {
         Prism.highlightAll();
     }, []);
@@ -23,8 +26,8 @@ const ArticlePage = ({ data }: { data: Article }) => {
                 <>
                     <PageHead article={data} />
                     <>
-                        <BackToAllArticles />
-                        <Article article={data} />
+                        <BackToAllArticles lang={lang} />
+                        <Article article={data} lang={lang} />
                     </>
                 </>
             ) : (
@@ -48,32 +51,27 @@ function PageHead({ article }: { article: Article }) {
     );
 }
 
-function BackToAllArticles() {
-    const router = useRouter();
-    const { locale } = router;
-    const text = locale === 'zh' ? '回到文章列表' : 'Back to All Articles';
-
+function BackToAllArticles({ lang }: { lang: string }) {
     return (
         <div className="p-4">
             <Link href="/articles">
                 📚{' '}
                 <span className="text-lg text-primary-800 underline underline-offset-4 decoration-dotted hover:decoration-solid hover:font-medium hover:decoration-2">
-                    {text}
+                    {lang ? '回到文章列表' : 'Back to All Articles'}
                 </span>
             </Link>
         </div>
     );
 }
 
-function Article({ article }: { article: Article }) {
-    console.log(article)
+function Article({ article, lang }: { article: Article; lang: string }) {
     return (
         <div className={`bg-neutral-100 border-b-4 border-b-primary-500 p-4 md:pt-10 md:pb-16 md:px-20 my-8`}>
-            <CustomTitle>{article.title}</CustomTitle>
+            <CustomTitle>{lang ? (article.title_zh ? article.title_zh : article.title) : article.title}</CustomTitle>
             <h4 className="my-4 text-neutral-400 text-sm">
-                Published at {article.updated_at ? formatDate(article.updated_at) : formatDate(article.created_at)}
+                {lang ? '发布于' : 'Published at'} {article.updated_at ? formatDate(article.updated_at) : formatDate(article.created_at)}
             </h4>
-            <>{parse(article.content)}</>
+            <>{lang ? (article.content_zh ? parse(article.content_zh) : parse(article.content)) : parse(article.content)}</>
         </div>
     );
 }

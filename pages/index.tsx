@@ -13,6 +13,7 @@ const Home = ({ home_intro, recent_articles, projects }: any) => {
     const router = useRouter();
     const { locale } = router;
     const t = locale === 'zh' ? zh : en;
+    const lang = locale === 'zh' ? 'zh' : '';
 
     let locale_home_intro = home_intro && (locale === 'zh' ? home_intro[1] : home_intro[0]);
 
@@ -21,7 +22,7 @@ const Home = ({ home_intro, recent_articles, projects }: any) => {
             <PageHead />
             <>
                 <SelfIntro locale_home_intro={locale_home_intro} />
-                <RecentArticles t={t} recent_articles={recent_articles} />
+                <RecentArticles t={t} recent_articles={recent_articles} lang={lang}/>
                 <MyProjects t={t} projects={projects} />
                 <ContactMe t={t} />
             </>
