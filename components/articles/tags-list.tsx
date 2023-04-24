@@ -9,7 +9,7 @@ interface Props {
 }
 
 const TagsList = ({ tags, selectedTag, setSelectedTag }: Props) => {
-    const active = "bg-primary-500 border-0"
+    const active = 'text-white bg-primary-500 border-0';
     return (
         <>
             {tags && tags.length && (

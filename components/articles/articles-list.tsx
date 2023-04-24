@@ -19,7 +19,7 @@ const ArticlesList = ({ articles, lang }: Props) => {
                     </ArticleLink>
                 ))
             ) : (
-                <div className="my-2 text-primary-800">No article</div>
+                <div className="my-2 text-neutral-500">Oops...No article</div>
             )}
         </>
     );
