@@ -11,7 +11,7 @@ interface Props {
 const ArticlesList = ({ articles, lang }: Props) => {
     return (
         <>
-            <CustomTitle>{lang ? '文章列表' : 'All Articles'}</CustomTitle>
+            <CustomTitle>{lang ? '文章列表' : 'Articles'}</CustomTitle>
             {articles && articles.length ? (
                 articles.map((article: Article) => (
                     <ArticleLink key={article.id} href={`/articles/${article.slug}`} tags={article.tags} className="my-2">
@@ -19,7 +19,7 @@ const ArticlesList = ({ articles, lang }: Props) => {
                     </ArticleLink>
                 ))
             ) : (
-                <div className="my-2 text-primary-800">Oops...There is something wrong, please try again later</div>
+                <div className="my-2 text-primary-800">No article</div>
             )}
         </>
     );

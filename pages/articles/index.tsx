@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import BackToHome from '../../components/back-to-home';
 import Layout from '../../components/layout';
 import ArticlesList from '../../components/articles/articles-list';
@@ -18,13 +18,17 @@ const AllArticles = ({ articles, tags }: Props) => {
     const { locale } = router;
     const lang = locale === 'zh' ? 'zh' : '';
 
+    const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
+
+    const filteredArticles = selectedTag ? articles.filter((article) => article.tags.some((tag) => tag.id === selectedTag.id)) : articles;
+
     return (
         <Layout>
             <PageHead />
             <BackToHome />
             <div className="m-8">
-                <TagsList tags={tags} />
-                <ArticlesList articles={articles} lang={lang} />
+                <TagsList tags={tags} selectedTag={selectedTag} setSelectedTag={setSelectedTag} />
+                <ArticlesList articles={filteredArticles} lang={lang} />
             </div>
         </Layout>
     );
