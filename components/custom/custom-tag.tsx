@@ -2,7 +2,7 @@ import React from 'react';
 
 type Props = {
     className?: string;
-    onClick: () => void;
+    onClick?: () => void;
     children: React.ReactNode;
 };
 
