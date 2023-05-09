@@ -4,6 +4,7 @@ import { Article } from '../../interfaces/Article';
 import CustomTitle from '../custom/custom-title';
 import CustomBlockLink from '../custom/custom-block-link';
 import { TransProps } from '../../interfaces/HomeText';
+import CustomButton from '../custom/custom-button';
 
 interface Props {
     t: TransProps;
@@ -27,7 +28,7 @@ const RecentArticles = ({ t, recent_articles, lang }: Props) => {
             )}
 
             <Link href={`/articles`} className="my-2">
-                <button className="block rounded px-3 py-1 bg-primary-500 hover:bg-primary-800">{t.recentArticles.button}</button>
+                <CustomButton>{t.recentArticles.button}</CustomButton>
             </Link>
         </div>
     );

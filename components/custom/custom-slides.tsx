@@ -27,13 +27,13 @@ const CustomSlides = ({ slides, width, height }: Props) => {
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setActiveIndex((prevIndex) => (prevIndex + 1) % slides.length);
+            setActiveIndex(activeIndex === slides.length - 1 ? 0 : activeIndex + 1);
         }, 5000);
 
         return () => {
             clearInterval(timer);
         };
-    }, [slides.length]);
+    }, [activeIndex, slides.length]);
 
     return (
         <>

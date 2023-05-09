@@ -4,19 +4,23 @@ interface InputProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     label: string;
 }
 const CustomTextarea = ({ label, ...otherProps }: InputProps) => {
-    const [isFocused, setIsFocused] = useState(false);
+    const [isLabelTransformed, setIsLabelTransformed] = useState(false);
 
-    const labelClassName = `absolute left-4 ${
-        isFocused ? 'top-3 bg-white px-1 left-2 text-sm' : 'top-7'
-    } transition-all duration-300 transform ${isFocused ? '-translate-y-2' : ''}`;
+    const basicLabel = `absolute transition-all duration-200 ease-in-out pointer-events-none`;
+    const focusLabel = isLabelTransformed ? 'top-0.5 bg-white rounded-md px-1 left-2 transform' : 'top-7 left-4 text-neutral-400';
 
     return (
         <div className="relative">
-            <label className={labelClassName}>{label}</label>
+            <label className={`${basicLabel} ${focusLabel}`}>{label}</label>
             <textarea
                 {...otherProps}
                 className="px-3 py-2 border-2 my-4 w-full max-w-lg border-neutral-800 rounded-md"
-                onFocus={() => setIsFocused(true)}
+                onInput={() => setIsLabelTransformed(true)}
+                onBlur={(e) => {
+                    if (!e.target.value) {
+                        setIsLabelTransformed(false);
+                    }
+                }}
             />
         </div>
     );

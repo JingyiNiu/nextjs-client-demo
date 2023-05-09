@@ -3,30 +3,33 @@ import axiosClient from '../axios.config';
 
 interface MutationType {
     url: string;
-    method?: string;
+    method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+}
+
+interface UseMutationState {
+    isLoading: boolean;
+    isSuccess: boolean;
+    data: any;
+    error: any;
 }
 
 const useMutation = ({ url, method = 'POST' }: MutationType) => {
-    const [state, setState] = useState({
+    const [state, setState] = useState<UseMutationState>({
         isLoading: false,
+        isSuccess: false,
         error: '',
-        success: false,
+        data: null,
     });
 
-    const handleRequest = async (data: any) => {
-        setState((prev) => ({
-            ...prev,
-            isLoading: true,
-        }));
+    const handleRequest = (data: any) => {
+        setState({ isLoading: true, isSuccess: false, data: null, error: null });
         axiosClient({ url, method, data })
             .then((res) => {
-                setState({ isLoading: false, error: '', success: true });
+                setState({ isLoading: false, isSuccess: true, error: '', data: res.data });
             })
             .catch((error: Error | any) => {
-                const errorMessage = error.response.data.message
-                    ? error.response.data.message
-                    : error.message;
-                setState({ isLoading: false, error: errorMessage, success: false });
+                const errorMessage = error.response.data.message ? error.response.data.message : error.message;
+                setState({ isLoading: false, isSuccess: false, error: errorMessage, data: null });
             });
     };
 
