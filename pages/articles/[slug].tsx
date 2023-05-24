@@ -1,31 +1,37 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import parse from 'html-react-parser';
-import CustomBlockLink from '../../components/custom-block-link';
-import CustomTitle from '../../components/custom-title';
+import CustomTitle from '../../components/custom/custom-title';
 import Layout from '../../components/layout';
 import { Article } from '../../interfaces/Article';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import NotFound from '../404';
 import { API_BASE_URL, formatDate } from '../../utils/utils';
+import Prism from 'prismjs';
+import 'prismjs/themes/prism-okaidia.min.css';
 
-const ArticlePage = ({ data }: { data: Array<Article> }) => {
-    const article = data[0];
+const ArticlePage = ({ data }: { data: Article }) => {
+    const router = useRouter();
+    const { locale } = router;
+    const lang = locale === 'zh' ? 'zh' : '';
+
+    useEffect(() => {
+        Prism.highlightAll();
+    }, []);
 
     return (
         <Layout>
-            {data.length ? (
+            {data ? (
                 <>
-                    <PageHead article={article} />
+                    <PageHead article={data} />
                     <>
-                        <BackToAllArticles />
-                        <Article article={article} />
+                        <BackToAllArticles lang={lang} />
+                        <Article article={data} lang={lang} />
                     </>
                 </>
             ) : (
-                <NotFound />
+                <div className="my-2 text-primary-800">Oops...There is something wrong, please try again later</div>
             )}
         </Layout>
     );
@@ -45,53 +51,43 @@ function PageHead({ article }: { article: Article }) {
     );
 }
 
-function BackToAllArticles() {
-    const router = useRouter();
-    const { locale } = router;
-    const text = locale === 'zh' ? '回到文章列表' : 'Back to All Articles';
-
+function BackToAllArticles({ lang }: { lang: string }) {
     return (
         <div className="p-4">
             <Link href="/articles">
                 📚{' '}
                 <span className="text-lg text-primary-800 underline underline-offset-4 decoration-dotted hover:decoration-solid hover:font-medium hover:decoration-2">
-                    {text}
+                    {lang ? '回到文章列表' : 'Back to All Articles'}
                 </span>
             </Link>
         </div>
     );
 }
 
-function Article({ article }: { article: Article }) {
+function Article({ article, lang }: { article: Article; lang: string }) {
     return (
         <div className={`bg-neutral-100 border-b-4 border-b-primary-500 p-4 md:pt-10 md:pb-16 md:px-20 my-8`}>
-            <CustomTitle>{article.title}</CustomTitle>
-            <h4 className='my-4 text-neutral-400 text-sm'>Published at { article.updated_at ? formatDate(article.updated_at) : formatDate(article.created_at)}</h4>
-            <>{parse(article.content)}</>
-        </div>
-    );
-}
-
-function PrevAndNextArticles() {
-    const router = useRouter();
-    const { locale } = router;
-    const prev = locale === 'zh' ? '前一篇文章' : 'Previous Article';
-    const next = locale === 'zh' ? '后一篇文章' : 'Next Article';
-
-    return (
-        <div className="flex justify-between mb-8">
-            <CustomBlockLink href="/articles/1">{prev}</CustomBlockLink>
-            <CustomBlockLink href="/articles/2">{next}</CustomBlockLink>
+            <CustomTitle>{lang ? (article.title_zh ? article.title_zh : article.title) : article.title}</CustomTitle>
+            <h4 className="my-4 text-neutral-400 text-sm">
+                {lang ? '发布于' : 'Published at'} {article.updated_at ? formatDate(article.updated_at) : formatDate(article.created_at)}
+            </h4>
+            <>{lang ? (article.content_zh ? parse(article.content_zh) : parse(article.content)) : parse(article.content)}</>
         </div>
     );
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const { params } = context;
-    const slug = params?.slug;
+    try {
+        const { params } = context;
+        const slug = params?.slug;
 
-    const res = await fetch(`${API_BASE_URL}/api/article/${slug}`);
-    const { data } = await res.json();
+        const res = await fetch(`${API_BASE_URL}/api/article/${slug}`);
+        const data = await res.json();
 
-    return { props: { data } };
+        return { props: { data } };
+    } catch (error) {
+        return {
+            props: { error: true },
+        };
+    }
 }

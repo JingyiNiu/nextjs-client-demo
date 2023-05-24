@@ -1,9 +1,13 @@
+import { Tag } from './Tag';
+
 export interface Article {
     id: number;
-    title: string;
     slug: string;
+    title: string;
     content: string;
-    tags: string[];
+    title_zh: string;
+    content_zh: string;
+    tags: Tag[];
     created_at: string;
     updated_at: string;
 }

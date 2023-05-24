@@ -12,12 +12,10 @@ const CustomButton = ({
     className,
     ...otherProps
 }: CustomButtonProps) => {
-    const baseButtonStyles = 'p-4 block w-full rounded-md border-2 disabled:opacity-40';
-    const primaryButtonStyles = 'border-primary-500 text-primary-500 hover:text-white hover:bg-primary-500';
-    const secondaryButtonStyles =
-        'border-secondary text-secondary hover:text-white hover:bg-secondary';
-    const cancelButtonStyles =
-        'border-neutral-400 text-neutral-400 hover:text-white hover:bg-neutral-400';
+    const baseButtonStyles = 'px-3 py-1.5 block rounded-md disabled:opacity-40';
+    const primaryButtonStyles = 'bg-primary-500 hover:bg-primary-800';
+    const secondaryButtonStyles = 'bg-secondary-500 hover:bg-secondary-800';
+    const cancelButtonStyles = 'bg-neutral-300 hover:bg-neutral-400';
     const customButtonStyles = buttonStyles === 1 ? secondaryButtonStyles : cancelButtonStyles;
     return (
         <>

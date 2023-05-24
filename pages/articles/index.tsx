@@ -1,37 +1,35 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import BackToHome from '../../components/back-to-home';
-import CustomBlockLink from '../../components/custom-block-link';
-import CustomTitle from '../../components/custom-title';
 import Layout from '../../components/layout';
+import ArticlesList from '../../components/articles/articles-list';
+import TagsList from '../../components/articles/tags-list';
 import { Article } from '../../interfaces/Article';
-import en from '../../locales/en/all_articles_en';
-import zh from '../../locales/zh/all_articles_zh';
+import { Tag } from '../../interfaces/Tag';
 import { API_BASE_URL } from '../../utils/utils';
 
-const AllArticles = ({ data }: { data: Array<Article> }) => {
+interface Props {
+    articles: Article[];
+    tags: Tag[];
+}
+const AllArticles = ({ articles, tags }: Props) => {
     const router = useRouter();
     const { locale } = router;
-    const t = locale === 'zh' ? zh : en;
+    const lang = locale === 'zh' ? 'zh' : '';
 
-    const allArticles = data;
+    const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
+
+    const filteredArticles = selectedTag ? articles.filter((article) => article.tags.some((tag) => tag.id === selectedTag.id)) : articles;
 
     return (
         <Layout>
             <PageHead />
-            <>
-                <BackToHome />
-                <ArticlesList>
-                    <CustomTitle>{t.title}</CustomTitle>
-                    <p>{t.text}</p>
-                    {allArticles.map((article: Article) => (
-                        <CustomBlockLink key={article.id} href={`/articles/${article.slug}`} className="my-2">
-                            {article.title}
-                        </CustomBlockLink>
-                    ))}
-                </ArticlesList>
-            </>
+            <BackToHome />
+            <div className="m-8">
+                <TagsList tags={tags} selectedTag={selectedTag} setSelectedTag={setSelectedTag} />
+                <ArticlesList articles={filteredArticles} lang={lang} />
+            </div>
         </Layout>
     );
 };
@@ -50,17 +48,20 @@ function PageHead() {
     );
 }
 
-function ArticlesList({ children }: { children: React.ReactNode }) {
-    return <div className="m-8">{children}</div>;
-}
-
 export async function getServerSideProps() {
-    const res = await fetch(`${API_BASE_URL}/api/article`);
-    const { data } = await res.json();
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/article`);
+        const data = await res.json();
 
-    return {
-        props: {
-            data,
-        },
-    };
+        return {
+            props: {
+                articles: data.articles,
+                tags: data.tags,
+            },
+        };
+    } catch (error) {
+        return {
+            props: { error: true },
+        };
+    }
 }

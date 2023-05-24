@@ -1,0 +1,49 @@
+@import './variables.scss';
+
+.slides {
+    width: 100%;
+    height: 100%;
+
+    button {
+        opacity: 0.1;
+        background-color: rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .slide_container {
+        width: 100%;
+        height: 100%;
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.5s ease-in-out;
+
+            &.active {
+                opacity: 1;
+            }
+
+            .slide_image_container {
+                width: 100%;
+                height: 100%;
+
+                .slide_description {
+                    color: #fff;
+                    background-color: rgba(0, 0, 0, 0.3);
+                }
+            }
+        }
+    }
+}
+.indicators {
+    .indicator {
+        background-color: rgba(0, 0, 0, 0.2);
+
+        &.active {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    }
+}

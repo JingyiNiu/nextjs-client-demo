@@ -21,7 +21,7 @@ const Nav = () => {
                 })
                 .then((res) => res.data);
             const { family_name, given_name, email, picture } = userInfo;
-            console.log(email)
+            console.log(family_name, given_name, email, picture)
         },
         onError: (error) => {
             console.log('Login failed:', error);
