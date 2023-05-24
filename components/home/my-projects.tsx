@@ -26,7 +26,7 @@ const MyProjects = ({ t, projects }: Props) => {
         <div className="my-8">
             <CustomTitle>{t.myProjects.title}</CustomTitle>
             <p className='my-2'>{t.myProjects.content}</p>
-            <CustomSlides slides={slidesData} width={500} height={250}/>
+            {/* <CustomSlides slides={slidesData} width={500} height={250}/> */}
         </div>
     );
 };
