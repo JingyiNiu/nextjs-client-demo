@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useGoogleLogin } from '@react-oauth/google';
 import LogoSvg from './logo';
 import axios from 'axios';
+import { GoogleUserInfo } from '../interfaces/GoogleUserInfo';
 
 const Nav = () => {
     const router = useRouter();
@@ -21,12 +22,16 @@ const Nav = () => {
                 })
                 .then((res) => res.data);
             const { family_name, given_name, email, picture } = userInfo;
-            console.log(family_name, given_name, email, picture)
+            saveUserToDB({ family_name, given_name, email, picture });
         },
         onError: (error) => {
             console.log('Login failed:', error);
         },
     });
+
+    const saveUserToDB = ({ family_name, given_name, email, picture }: GoogleUserInfo) => {
+        console.log("saveUserToDB", family_name, given_name, email, picture)
+    };
 
     return (
         <div className={`flex justify-between items-center px-5 py-2 bg-neutral-100`}>
@@ -34,14 +39,15 @@ const Nav = () => {
                 <LogoSvg />
             </Link>
             <div>
-                <button
-                    onClick={() => googleLogin()}
-                    className="mr-2 border py-1 px-2 cursor-pointer hover:bg-neutral-300 bg-neutral-200"
-                >
-                    login
+                <button onClick={() => googleLogin()} className="text-sm mr-4 rounded-md pt-0.5 pb-1 px-2 cursor-pointer hover:bg-primary-500">
+                    Sign in
                 </button>
 
-                <select onChange={handleSelectChange} value={router.locale} className="outline-none bg-neutral-100">
+                <select
+                    onChange={handleSelectChange}
+                    value={router.locale}
+                    className="outline-none py-0.5 px-1 rounded-md bg-neutral-100 hover:bg-neutral-200"
+                >
                     <option value="en">EN</option>
                     <option value="zh">中</option>
                 </select>

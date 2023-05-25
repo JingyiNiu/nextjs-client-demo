@@ -8,7 +8,6 @@ import SelfIntro from '../components/home/self-intro';
 import RecentArticles from '../components/home/recent-articles';
 import ContactMe from '../components/home/contact-me';
 import MyProjects from '../components/home/my-projects';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const Home = ({ home_intro, recent_articles, projects }: any) => {
     const router = useRouter();
@@ -19,17 +18,15 @@ const Home = ({ home_intro, recent_articles, projects }: any) => {
     let locale_home_intro = home_intro && (locale === 'zh' ? home_intro[1] : home_intro[0]);
 
     return (
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-            <Layout>
-                <PageHead />
-                <>
-                    <SelfIntro locale_home_intro={locale_home_intro} />
-                    <RecentArticles t={t} recent_articles={recent_articles} lang={lang}/>
-                    <MyProjects t={t} projects={projects} />
-                    <ContactMe t={t} />
-                </>
-            </Layout>
-        </GoogleOAuthProvider>
+        <Layout>
+            <PageHead />
+            <>
+                <SelfIntro locale_home_intro={locale_home_intro} />
+                <RecentArticles t={t} recent_articles={recent_articles} lang={lang} />
+                <MyProjects t={t} projects={projects} />
+                <ContactMe t={t} />
+            </>
+        </Layout>
     );
 };
 
@@ -40,10 +37,7 @@ function PageHead() {
         <Head>
             <title>N.JY</title>
             <meta name="description" content="A personal website created, maintain by Jingyi Niu" />
-            <meta
-                name="keywords"
-                content="Niu Jingyi, Jingyi Niu, niujingyi, Personal website, Nextjs, Web App, Portfolio"
-            />
+            <meta name="keywords" content="Niu Jingyi, Jingyi Niu, niujingyi, Personal website, Nextjs, Web App, Portfolio" />
             <meta name="author" content="Jingyi Niu" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
