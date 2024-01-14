@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import en from "../locales/en/text_en";
 import zh from "../locales/zh/text_zh";
 import Layout from "../components/layout";
+import parse from 'html-react-parser';
 // import Parallax from "../components/parallax/Parallax";
 // import IndexPage from "./home";
 
@@ -15,10 +16,15 @@ const Home = () => {
     <Layout>
       <PageHead />
       <div className="container mx-auto">
-        <div className="font-bold text-lg mb-2">{t.selfIntro.title}</div>
-        <div>
+        <div className="font-bold text-lg my-4">{t.selfIntro.title}</div>
+        <div className="mb-4">
           {t.selfIntro.contents.map((t) => (
             <p key={t.id}>{t.text}</p>
+          ))}
+        </div>
+        <div className="mb-4">
+          {t.projects.contents.map((t) => (
+            <p key={t.id}>{parse(t.text)}</p>
           ))}
         </div>
         {/* <Parallax /> */}
